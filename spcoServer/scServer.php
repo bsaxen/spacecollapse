@@ -69,7 +69,7 @@ if($ok == 1)
   fwrite($spcoFile, "LABEL       ".$label);
   fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "VALUE       ".$value);
-  fwrite($spcoFile, "&nbsp");
+  fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "UNIT        ".$unit);
   fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "DATETIME    ".$datetime);
