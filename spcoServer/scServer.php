@@ -2,7 +2,7 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2017-10-22
+// Date: 2017-11-07
 // Author: Benny Saxen
 //
 //=============================================
@@ -16,19 +16,19 @@ $ok = 1;
 if (isset($_GET['label'])) {
     $label = $_GET['label'];
 } else {
-    $ok = 0;
+    $ok++;
 }
 
 if (isset($_GET['value'])) {
     $value = $_GET['value'];
 } else {
-    $ok = 0;
+    $ok++;
 }
 
 if (isset($_GET['unit'])) {
     $unit = $_GET['unit'];
 } else {
-    $ok = 0;
+    $ok++;
 }
 
 if (isset($_GET['datetime'])) {
@@ -94,7 +94,7 @@ if($ok == 1)
 }
 else
 {
- echo("spco 1");
+ echo("spco error $ok");
 }
 
 ?>
