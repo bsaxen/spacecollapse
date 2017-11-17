@@ -93,19 +93,19 @@ if($ok == 1)
     
   $spco_page = $label.'.json';
   $spcoFile = fopen($spco_page, "w");
-  fwrite($spcoFile, "{"container": {\n");
-  fwrite($spcoFile, "{"   label": "$label",\n");
-  fwrite($spcoFile, "{"   value": "$value",\n");
-  fwrite($spcoFile, "{"   unit": "$unit",\n");
-  fwrite($spcoFile, "{"   datetime": "$datetime",\n");
-  fwrite($spcoFile, "{"   period": "$period",\n");
-  fwrite($spcoFile, "{"   position": "$position",\n");
-  fwrite($spcoFile, "{"   creator": "$creator",\n");
-  fwrite($spcoFile, "{"   description": "$description",\n");
-  fwrite($spcoFile, "{"   sc_server_id": "$sc_server_id",\n");
-  fwrite($spcoFile, "{"   sc_host": "$sc_host",\n");
-  fwrite($spcoFile, "{"   sc_timestamp": "$sc_timestamp",\n");
-  fwrite($spcoFile, "{"}\n");
+  fwrite($spcoFile, "{\"container\": {\n");
+  fwrite($spcoFile, "{\"   label\": \"$label\",\n");
+  fwrite($spcoFile, "{\"   value\": \"$value\",\n");
+  fwrite($spcoFile, "{\"   unit\": \"$unit\",\n");
+  fwrite($spcoFile, "{\"   datetime\": \"$datetime\",\n");
+  fwrite($spcoFile, "{\"   period\": \"$period\",\n");
+  fwrite($spcoFile, "{\"   position\": \"$position\",\n");
+  fwrite($spcoFile, "{\"   creator\": \"$creator\",\n");
+  fwrite($spcoFile, "{\"   description\": \"$description\",\n");
+  fwrite($spcoFile, "{\"   sc_server_id\": \"$sc_server_id\",\n");
+  fwrite($spcoFile, "{\"   sc_host\": \"$sc_host\",\n");
+  fwrite($spcoFile, "{\"   sc_timestamp\": \"$sc_timestamp\",\n");
+  fwrite($spcoFile, "{\"}\n\" ");
   fclose($spcoFile);
     
   echo("spco 0");
