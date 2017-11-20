@@ -2,7 +2,7 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2017-11-07
+// Date: 2017-11-20
 // Author: Benny Saxen
 //
 //=============================================
@@ -66,6 +66,7 @@ if($ok == 1)
   $spco_page = $label.'.html';
   $spcoFile = fopen($spco_page, "w");
   fwrite($spcoFile, "<html>");
+  fwrite($spcoFile, "<body bgcolor=\"#9EB14A\">");
   fwrite($spcoFile, "LABEL       ".$label);
   fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "VALUE       ".$value);
@@ -88,7 +89,7 @@ if($ok == 1)
   fwrite($spcoFile, "SC_HOST      ".$sc_host);
   fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "SC_TIMESTAMP ".$sc_timestamp);
-  fwrite($spcoFile, "</html>");
+  fwrite($spcoFile, "</body></html>");
   fclose($spcoFile);
     
   $spco_page = $label.'.json';
@@ -104,7 +105,7 @@ if($ok == 1)
   fwrite($spcoFile, "   \"description\": \"$description\",\n");
   fwrite($spcoFile, "   \"sc_server_id\": \"$sc_server_id\",\n");
   fwrite($spcoFile, "   \"sc_host\": \"$sc_host\",\n");
-  fwrite($spcoFile, "   \"sc_timestamp\": \"$sc_timestamp\",\n");
+  fwrite($spcoFile, "   \"sc_timestamp\": \"$sc_timestamp\"\n");
   fwrite($spcoFile, "}}\n ");
   fclose($spcoFile);
     
