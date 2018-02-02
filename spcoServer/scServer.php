@@ -2,7 +2,7 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2017-11-20
+// Date: 2018-02-02
 // Author: Benny Saxen
 //
 //=============================================
@@ -13,24 +13,41 @@ $sc_timestamp = date_format($date, 'Y-m-d H:i:s');
 //=============================================
 $ok = 1;
 
-if (isset($_GET['label'])) {
-    $label = $_GET['label'];
+if (isset($_GET['type'])) {
+    $type = $_GET['type'];
 } else {
     $ok++;
+}
+
+if (isset($_GET['label'])) {
+    $label = $_GET['label'];
 }
 
 if (isset($_GET['value'])) {
     $value = $_GET['value'];
-} else {
-    $ok++;
 }
 
 if (isset($_GET['unit'])) {
     $unit = $_GET['unit'];
-} else {
-    $ok++;
 }
 
+// RunStepperMotorRaw
+if (isset($_GET['direction'])) {
+    $direction = $_GET['direction'];
+}
+if (isset($_GET['steps'])) {
+    $steps = $_GET['steps'];
+}
+if (isset($_GET['step_size'])) {
+    $steps_size = $_GET['step_size'];
+}
+
+// RunStepperMotorRaw
+if (isset($_GET['extra'])) {
+    $extra = $_GET['extra'];
+}
+
+// General
 if (isset($_GET['datetime'])) {
     $datetime = $_GET['datetime'];
 } else {
@@ -67,10 +84,30 @@ if($ok == 1)
   $spcoFile = fopen($spco_page, "w");
   fwrite($spcoFile, "<html>");
   fwrite($spcoFile, "<body bgcolor=\"#9EB14A\">");
+  fwrite($spcoFile, "TYPE       ".$type);
+  fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "LABEL       ".$label);
   fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "VALUE       ".$value);
-  fwrite($spcoFile, "<br>");
+
+  if ($type == 'RunStepperMotorRaw')
+  {
+    fwrite($spcoFile, "DIRECTION       ".$direction);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "STEPS       ".$steps);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "STEPS_SIZE       ".$step_size);
+    fwrite($spcoFile, "<br>");
+  }
+  else if ($type == 'Trigger'){
+    fwrite($spcoFile, "EXTRA       ".$extra);
+    fwrite($spcoFile, "<br>");
+  }
+  else {
+    fwrite($spcoFile, "VALUE       ".$value);
+    fwrite($spcoFile, "<br>");
+  }
+
+
   fwrite($spcoFile, "UNIT        ".$unit);
   fwrite($spcoFile, "<br>");
   fwrite($spcoFile, "DATETIME    ".$datetime);
@@ -91,13 +128,29 @@ if($ok == 1)
   fwrite($spcoFile, "SC_TIMESTAMP ".$sc_timestamp);
   fwrite($spcoFile, "</body></html>");
   fclose($spcoFile);
-    
+
+//===========================================
   $spco_page = $label.'.json';
   $spcoFile = fopen($spco_page, "w");
   fwrite($spcoFile, "{\"spacecollapse\": {\n");
+  fwrite($spcoFile, "   \"type\": \"$type\",\n");
   fwrite($spcoFile, "   \"label\": \"$label\",\n");
-  fwrite($spcoFile, "   \"value\": \"$value\",\n");
-  fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
+
+  if ($type == 'RunStepperMotorRaw')
+  {
+    fwrite($spcoFile, "   \"direction\": \"$direction\",\n");
+    fwrite($spcoFile, "   \"steps\": \"$steps\",\n");
+    fwrite($spcoFile, "   \"step_size\": \"$step_size\",\n");
+  }
+  else if ($type == 'Trigger'){
+    fwrite($spcoFile, "   \"extra\": \"$extra\",\n");
+  }
+  else {
+    fwrite($spcoFile, "   \"value\": \"$value\",\n");
+    fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
+  }
+
+
   fwrite($spcoFile, "   \"datetime\": \"$datetime\",\n");
   fwrite($spcoFile, "   \"period\": \"$period\",\n");
   fwrite($spcoFile, "   \"position\": \"$position\",\n");
@@ -108,7 +161,7 @@ if($ok == 1)
   fwrite($spcoFile, "   \"sc_timestamp\": \"$sc_timestamp\"\n");
   fwrite($spcoFile, "}}\n ");
   fclose($spcoFile);
-    
+
   echo("spco 0");
 }
 else
