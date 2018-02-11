@@ -216,7 +216,7 @@ if($operation == $store)
   }
   if($operation == $get_single_parameter)
   {
-    //echo("Get singel value");
+
     if (isset($_GET['label'])) {
       $label = $_GET['label'];
     }
@@ -225,7 +225,7 @@ if($operation == $store)
     }
 
     $spco_page = $label.'.txt';
-    echo("$spco_page <br>");
+
     $file = fopen($spco_page,"r");
     if ($file)
     {
