@@ -2,171 +2,256 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2018-02-02
+// Date: 2018-02-11
 // Author: Benny Saxen
 //
 //=============================================
+$store = 1;
+$get_single_parameter = 2;
+
 $sc_host      = "simuino.com";
 $sc_server_id = "Butterfly Server 1.0";
 $date = date_create();
 $sc_timestamp = date_format($date, 'Y-m-d H:i:s');
 //=============================================
-$ok = 1;
 
-if (isset($_GET['type'])) {
-    $type = $_GET['type'];
-} else {
-    $ok++;
-}
-
-if (isset($_GET['label'])) {
-    $label = $_GET['label'];
-}
-
-if (isset($_GET['value'])) {
-    $value = $_GET['value'];
-}
-
-if (isset($_GET['unit'])) {
-    $unit = $_GET['unit'];
-}
-
-// RunStepperMotorRaw
-if (isset($_GET['direction'])) {
-    $direction = $_GET['direction'];
-}
-if (isset($_GET['steps'])) {
-    $steps = $_GET['steps'];
-}
-if (isset($_GET['step_size'])) {
-    $steps_size = $_GET['step_size'];
-}
-
-// RunStepperMotorRaw
-if (isset($_GET['extra'])) {
-    $extra = $_GET['extra'];
-}
-
-// General
-if (isset($_GET['datetime'])) {
-    $datetime = $_GET['datetime'];
-} else {
-    $datetime = "-";
-}
-
-if (isset($_GET['period'])) {
-    $period = $_GET['period'];
-} else {
-    $period = "-";
-}
-
-if (isset($_GET['position'])) {
-    $position = $_GET['position'];
-} else {
-    $position = "-";
-}
-
-if (isset($_GET['creator'])) {
-    $creator = $_GET['creator'];
-} else {
-    $creator = "-";
-}
-
-if (isset($_GET['description'])) {
-    $description = $_GET['description'];
-} else {
-    $description = "-";
-}
-//===========================================
-if($ok == 1)
-{
-  $spco_page = $label.'.html';
-  $spcoFile = fopen($spco_page, "w");
-  fwrite($spcoFile, "<html>");
-  fwrite($spcoFile, "<body bgcolor=\"#9EB14A\">");
-  fwrite($spcoFile, "TYPE       ".$type);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "LABEL       ".$label);
-  fwrite($spcoFile, "<br>");
-
-  if ($type == 'RunStepperMotorRaw')
-  {
-    fwrite($spcoFile, "DIRECTION       ".$direction);
-    fwrite($spcoFile, "<br>");
-    fwrite($spcoFile, "STEPS       ".$steps);
-    fwrite($spcoFile, "<br>");
-    fwrite($spcoFile, "STEPS_SIZE       ".$step_size);
-    fwrite($spcoFile, "<br>");
-  }
-  else if ($type == 'Trigger'){
-    fwrite($spcoFile, "EXTRA       ".$extra);
-    fwrite($spcoFile, "<br>");
-  }
-  else {
-    fwrite($spcoFile, "VALUE       ".$value);
-    fwrite($spcoFile, "<br>");
-  }
-
-
-  fwrite($spcoFile, "UNIT        ".$unit);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "DATETIME    ".$datetime);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "PERIOD      ".$period);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "POSITION    ".$position);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "CREATOR     ".$creator);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "DESCRIPTION ".$description);
-  fwrite($spcoFile, "<br>");
-  //fwrite($spcoFile, "# SpaceCollapse Server Information<br>");
-  fwrite($spcoFile, "SC_SERVER_ID ".$sc_server_id);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "SC_HOST      ".$sc_host);
-  fwrite($spcoFile, "<br>");
-  fwrite($spcoFile, "SC_TIMESTAMP ".$sc_timestamp);
-  fwrite($spcoFile, "</body></html>");
-  fclose($spcoFile);
-
-//===========================================
-  $spco_page = $label.'.json';
-  $spcoFile = fopen($spco_page, "w");
-  fwrite($spcoFile, "{\"spacecollapse\": {\n");
-  fwrite($spcoFile, "   \"type\": \"$type\",\n");
-  fwrite($spcoFile, "   \"label\": \"$label\",\n");
-
-  if ($type == 'RunStepperMotorRaw')
-  {
-    fwrite($spcoFile, "   \"direction\": \"$direction\",\n");
-    fwrite($spcoFile, "   \"steps\": \"$steps\",\n");
-    fwrite($spcoFile, "   \"step_size\": \"$step_size\",\n");
-  }
-  else if ($type == 'Trigger'){
-    fwrite($spcoFile, "   \"extra\": \"$extra\",\n");
-  }
-  else {
-    fwrite($spcoFile, "   \"value\": \"$value\",\n");
-    fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
-  }
-
-
-  fwrite($spcoFile, "   \"datetime\": \"$datetime\",\n");
-  fwrite($spcoFile, "   \"period\": \"$period\",\n");
-  fwrite($spcoFile, "   \"position\": \"$position\",\n");
-  fwrite($spcoFile, "   \"creator\": \"$creator\",\n");
-  fwrite($spcoFile, "   \"description\": \"$description\",\n");
-  fwrite($spcoFile, "   \"sc_server_id\": \"$sc_server_id\",\n");
-  fwrite($spcoFile, "   \"sc_host\": \"$sc_host\",\n");
-  fwrite($spcoFile, "   \"sc_timestamp\": \"$sc_timestamp\"\n");
-  fwrite($spcoFile, "}}\n ");
-  fclose($spcoFile);
-
-  echo("spco 0");
+if (isset($_GET['op'])) {
+  $operation = $_GET['op'];
 }
 else
 {
- echo("spco error $ok");
+  $operation = $store;
 }
 
-?>
+if($operation == $store)
+{
+  $ok = 1;
+
+  if (isset($_GET['type'])) {
+    $type = $_GET['type'];
+  } else {
+    $ok++;
+  }
+
+  if (isset($_GET['label'])) {
+    $label = $_GET['label'];
+  }
+
+  if (isset($_GET['value'])) {
+    $value = $_GET['value'];
+  }
+
+  if (isset($_GET['unit'])) {
+    $unit = $_GET['unit'];
+  }
+
+  // RunStepperMotorRaw
+  if (isset($_GET['direction'])) {
+    $direction = $_GET['direction'];
+  }
+  if (isset($_GET['steps'])) {
+    $steps = $_GET['steps'];
+  }
+  if (isset($_GET['step_size'])) {
+    $steps_size = $_GET['step_size'];
+  }
+
+  // RunStepperMotorRaw
+  if (isset($_GET['extra'])) {
+    $extra = $_GET['extra'];
+  }
+
+  // General
+  if (isset($_GET['datetime'])) {
+    $datetime = $_GET['datetime'];
+  } else {
+    $datetime = "-";
+  }
+
+  if (isset($_GET['period'])) {
+    $period = $_GET['period'];
+  } else {
+    $period = "-";
+  }
+
+  if (isset($_GET['position'])) {
+    $position = $_GET['position'];
+  } else {
+    $position = "-";
+  }
+
+  if (isset($_GET['creator'])) {
+    $creator = $_GET['creator'];
+  } else {
+    $creator = "-";
+  }
+
+  if (isset($_GET['description'])) {
+    $description = $_GET['description'];
+  } else {
+    $description = "-";
+  }
+  //===========================================
+  if($ok == 1)
+  {
+    //===========================================
+    // HTML
+    //===========================================
+    $spco_page = $label.'.html';
+    $spcoFile = fopen($spco_page, "w");
+    fwrite($spcoFile, "<html>");
+    fwrite($spcoFile, "<body bgcolor=\"#9EB14A\">");
+    fwrite($spcoFile, "TYPE       ".$type);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "LABEL       ".$label);
+    fwrite($spcoFile, "<br>");
+
+    if ($type == 'RunStepperMotorRaw')
+    {
+      fwrite($spcoFile, "DIRECTION       ".$direction);
+      fwrite($spcoFile, "<br>");
+      fwrite($spcoFile, "STEPS       ".$steps);
+      fwrite($spcoFile, "<br>");
+      fwrite($spcoFile, "STEPS_SIZE       ".$step_size);
+      fwrite($spcoFile, "<br>");
+    }
+    else if ($type == 'Trigger'){
+      fwrite($spcoFile, "EXTRA       ".$extra);
+      fwrite($spcoFile, "<br>");
+    }
+    else {
+      fwrite($spcoFile, "VALUE       ".$value);
+      fwrite($spcoFile, "<br>");
+    }
+
+
+    fwrite($spcoFile, "UNIT        ".$unit);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "DATETIME    ".$datetime);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "PERIOD      ".$period);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "POSITION    ".$position);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "CREATOR     ".$creator);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "DESCRIPTION ".$description);
+    fwrite($spcoFile, "<br>");
+    //fwrite($spcoFile, "# SpaceCollapse Server Information<br>");
+    fwrite($spcoFile, "SC_SERVER_ID ".$sc_server_id);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "SC_HOST      ".$sc_host);
+    fwrite($spcoFile, "<br>");
+    fwrite($spcoFile, "SC_TIMESTAMP ".$sc_timestamp);
+    fwrite($spcoFile, "</body></html>");
+    fclose($spcoFile);
+
+    //===========================================
+    // JSON
+    //===========================================
+    $spco_page = $label.'.json';
+    $spcoFile = fopen($spco_page, "w");
+    fwrite($spcoFile, "{\"spacecollapse\": {\n");
+      fwrite($spcoFile, "   \"type\": \"$type\",\n");
+      fwrite($spcoFile, "   \"label\": \"$label\",\n");
+
+      if ($type == 'RunStepperMotorRaw')
+      {
+        fwrite($spcoFile, "   \"direction\": \"$direction\",\n");
+        fwrite($spcoFile, "   \"steps\": \"$steps\",\n");
+        fwrite($spcoFile, "   \"step_size\": \"$step_size\",\n");
+      }
+      else if ($type == 'Trigger'){
+        fwrite($spcoFile, "   \"extra\": \"$extra\",\n");
+      }
+      else {
+        fwrite($spcoFile, "   \"value\": \"$value\",\n");
+        fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
+      }
+
+
+      fwrite($spcoFile, "   \"datetime\": \"$datetime\",\n");
+      fwrite($spcoFile, "   \"period\": \"$period\",\n");
+      fwrite($spcoFile, "   \"position\": \"$position\",\n");
+      fwrite($spcoFile, "   \"creator\": \"$creator\",\n");
+      fwrite($spcoFile, "   \"description\": \"$description\",\n");
+      fwrite($spcoFile, "   \"sc_server_id\": \"$sc_server_id\",\n");
+      fwrite($spcoFile, "   \"sc_host\": \"$sc_host\",\n");
+      fwrite($spcoFile, "   \"sc_timestamp\": \"$sc_timestamp\"\n");
+      fwrite($spcoFile, "}}\n ");
+      fclose($spcoFile);
+
+      //===========================================
+      // TXT
+      //===========================================
+      $spco_page = $label.'.txt';
+      $spcoFile = fopen($spco_page, "w");
+      fwrite($spcoFile,   "TYPE         $type\n");
+      fwrite($spcoFile,   "LABEL        $label\n");
+      if ($type == 'RunStepperMotorRaw')
+      {
+        fwrite($spcoFile, "DIRECTION    $direction\n");
+        fwrite($spcoFile, "STEPS        $steps\n");
+        fwrite($spcoFile, "STEPS_SIZE   $step_size\n");
+      }
+      else if ($type == 'Trigger'){
+        fwrite($spcoFile, "EXTRA        $extra\n");
+      }
+      else {
+        fwrite($spcoFile, "VALUE        $value\n");
+      }
+      fwrite($spcoFile,   "UNIT         $unit\n");
+      fwrite($spcoFile,   "DATETIME     $datetime\n");
+      fwrite($spcoFile,   "PERIOD       $period\n");
+      fwrite($spcoFile,   "POSITION     $position\n");
+      fwrite($spcoFile,   "CREATOR      $creator\n");
+      fwrite($spcoFile,   "DESCRIPTION  $description\n");
+      //fwrite($spcoFile, "# SpaceCollapse Server Information<br>");
+      fwrite($spcoFile,   "SC_SERVER_ID $sc_server_id\n");
+      fwrite($spcoFile,   "SC_HOST      $sc_host\n");
+      fwrite($spcoFile,   "SC_TIMESTAMP $sc_timestamp\n");
+      fclose($spcoFile);
+
+    }
+  }
+  if($operation == $get_single_parameter)
+  {
+    //echo("Get singel value");
+    if (isset($_GET['label'])) {
+      $label = $_GET['label'];
+    }
+    if (isset($_GET['param'])) {
+      $param = $_GET['param'];
+    }
+
+    $spco_page = $label.'.txt';
+    echo("$spco_page <br>");
+    $file = fopen($spco_page,"r");
+    if ($file)
+    {
+      while(! feof($file))
+      {
+        $line = fgets($file);
+        sscanf($line,"%s",$work);
+        if($work == 'LABEL')sscanf($line,"%s %s",$work,$lable);
+        if($work == 'VALUE')sscanf($line,"%s %f",$work,$value);
+        if($work == 'UNIT')sscanf($line,"%s %s",$work,$unit);
+        if($work == 'DATETIME')sscanf($line,"%s %s",$work,$datetime);
+        if($work == 'PERIOD')sscanf($line,"%s %d",$work,$period);
+        if($work == 'POSITION')sscanf($line,"%s %s",$work,$position);
+        if($work == 'DESCRIPTION')sscanf($line,"%s %s",$work,$description);
+        if($work == 'SC_SERVER_ID')sscanf($line,"%s %s",$work,$sc_server_id);
+        if($work == 'SC_HOST')sscanf($line,"%s %s",$work,$sc_host);
+        if($work == 'SC_TIMESTAMP')sscanf($line,"%s %s",$work,$sc_timestamp);
+      }
+      fclose($file);
+    }
+    else {
+      echo("Error");
+    }
+
+    echo "$param : ${$param} <br>";
+  }
+
+
+  ?>
