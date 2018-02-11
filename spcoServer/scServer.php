@@ -251,7 +251,7 @@ if($operation == $store)
     }
 
     //echo "$param : ${$param} <br>";
-    echo "${$param}";
+    echo "[${$param}]";
   }
 
 
