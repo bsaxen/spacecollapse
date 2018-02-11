@@ -250,7 +250,8 @@ if($operation == $store)
       echo("Error");
     }
 
-    echo "$param : ${$param} <br>";
+    //echo "$param : ${$param} <br>";
+    echo "${$param}";
   }
 
 
