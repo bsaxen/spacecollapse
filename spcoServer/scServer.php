@@ -76,7 +76,9 @@ if($operation == $store)
 
   if (isset($_GET['value'])) {
     $value = $_GET['value'];
+    $value = number_format("$value",3);
     $prev = readLatestPage($label,'value');
+    $prev = number_format("$prev",3);
     $delta = $value - $prev;
   }
 
@@ -267,9 +269,7 @@ if($operation == $store)
     }
 
     $res = readLatestPage($label,$param);
-    $x = number_format("$res",3);
-    echo "[$x]";
-
+    echo "[$res]";
   }
 
 
