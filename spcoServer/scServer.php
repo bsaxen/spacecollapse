@@ -2,7 +2,7 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2018-02-11
+// Date: 2018-02-12
 // Author: Benny Saxen
 //
 //=============================================
@@ -13,6 +13,40 @@ $sc_host      = "simuino.com";
 $sc_server_id = "Butterfly Server 1.0";
 $date = date_create();
 $sc_timestamp = date_format($date, 'Y-m-d H:i:s');
+//=============================================
+function readLatestPage($lbl,$prm)
+//=============================================
+{
+    $spco_page = $lbl.'.txt';
+    $file = fopen($spco_page,"r");
+    if ($file)
+    {
+      while(! feof($file))
+      {
+        $line = fgets($file);
+        sscanf($line,"%s",$work);
+        if($work == 'LABEL')sscanf($line,"%s %s",$work,$label);
+        if($work == 'VALUE')sscanf($line,"%s %f",$work,$value);
+        if($work == 'UNIT')sscanf($line,"%s %s",$work,$unit);
+        if($work == 'DATETIME')sscanf($line,"%s %s",$work,$datetime);
+        if($work == 'PERIOD')sscanf($line,"%s %d",$work,$period);
+        if($work == 'POSITION')sscanf($line,"%s %s",$work,$position);
+        if($work == 'DESCRIPTION')sscanf($line,"%s %s",$work,$description);
+        if($work == 'SC_SERVER_ID')sscanf($line,"%s %s",$work,$sc_server_id);
+        if($work == 'SC_HOST')sscanf($line,"%s %s",$work,$sc_host);
+        if($work == 'SC_TIMESTAMP')sscanf($line,"%s %s",$work,$sc_timestamp);
+      }
+      fclose($file);
+    }
+    else {
+      echo("Error");
+    }
+
+    //echo "$param : ${$param} <br>";
+    return "${$prm}";
+}
+//=============================================
+// End of library
 //=============================================
 
 if (isset($_GET['op'])) {
@@ -26,6 +60,8 @@ else
 if($operation == $store)
 {
   $ok = 1;
+  $delta = 0;
+  $prev = 0;
 
   if (isset($_GET['type'])) {
     $type = $_GET['type'];
@@ -39,6 +75,8 @@ if($operation == $store)
 
   if (isset($_GET['value'])) {
     $value = $_GET['value'];
+    $prev = readLatestPage($label,'value');
+    $delta = $value - $prev;
   }
 
   if (isset($_GET['unit'])) {
@@ -122,6 +160,8 @@ if($operation == $store)
     else {
       fwrite($spcoFile, "VALUE       ".$value);
       fwrite($spcoFile, "<br>");
+      fwrite($spcoFile, "DELTA       ".$delta);
+      fwrite($spcoFile, "<br>");
     }
 
 
@@ -166,10 +206,10 @@ if($operation == $store)
       }
       else {
         fwrite($spcoFile, "   \"value\": \"$value\",\n");
-        fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
+        fwrite($spcoFile, "   \"delta\": \"$delta\",\n");
       }
 
-
+      fwrite($spcoFile, "   \"unit\": \"$unit\",\n");
       fwrite($spcoFile, "   \"datetime\": \"$datetime\",\n");
       fwrite($spcoFile, "   \"period\": \"$period\",\n");
       fwrite($spcoFile, "   \"position\": \"$position\",\n");
@@ -199,6 +239,7 @@ if($operation == $store)
       }
       else {
         fwrite($spcoFile, "VALUE        $value\n");
+        fwrite($spcoFile, "DELTA        $delta\n");
       }
       fwrite($spcoFile,   "UNIT         $unit\n");
       fwrite($spcoFile,   "DATETIME     $datetime\n");
@@ -224,34 +265,10 @@ if($operation == $store)
       $param = $_GET['param'];
     }
 
-    $spco_page = $label.'.txt';
+    $res = readLatestPage($label,$param);
 
-    $file = fopen($spco_page,"r");
-    if ($file)
-    {
-      while(! feof($file))
-      {
-        $line = fgets($file);
-        sscanf($line,"%s",$work);
-        if($work == 'LABEL')sscanf($line,"%s %s",$work,$lable);
-        if($work == 'VALUE')sscanf($line,"%s %f",$work,$value);
-        if($work == 'UNIT')sscanf($line,"%s %s",$work,$unit);
-        if($work == 'DATETIME')sscanf($line,"%s %s",$work,$datetime);
-        if($work == 'PERIOD')sscanf($line,"%s %d",$work,$period);
-        if($work == 'POSITION')sscanf($line,"%s %s",$work,$position);
-        if($work == 'DESCRIPTION')sscanf($line,"%s %s",$work,$description);
-        if($work == 'SC_SERVER_ID')sscanf($line,"%s %s",$work,$sc_server_id);
-        if($work == 'SC_HOST')sscanf($line,"%s %s",$work,$sc_host);
-        if($work == 'SC_TIMESTAMP')sscanf($line,"%s %s",$work,$sc_timestamp);
-      }
-      fclose($file);
-    }
-    else {
-      echo("Error");
-    }
+    echo "[$res]";
 
-    //echo "$param : ${$param} <br>";
-    echo "[${$param}]";
   }
 
 
