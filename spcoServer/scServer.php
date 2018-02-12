@@ -27,6 +27,7 @@ function readLatestPage($lbl,$prm)
         sscanf($line,"%s",$work);
         if($work == 'LABEL')sscanf($line,"%s %s",$work,$label);
         if($work == 'VALUE')sscanf($line,"%s %f",$work,$value);
+        if($work == 'DELTA')sscanf($line,"%s %f",$work,$delta);
         if($work == 'UNIT')sscanf($line,"%s %s",$work,$unit);
         if($work == 'DATETIME')sscanf($line,"%s %s",$work,$datetime);
         if($work == 'PERIOD')sscanf($line,"%s %d",$work,$period);
