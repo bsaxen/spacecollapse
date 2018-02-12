@@ -267,8 +267,8 @@ if($operation == $store)
     }
 
     $res = readLatestPage($label,$param);
-
-    echo "[$res]";
+    $x = number_format("$res",3);
+    echo "[$x]";
 
   }
 
