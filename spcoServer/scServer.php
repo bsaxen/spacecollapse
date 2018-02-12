@@ -80,6 +80,7 @@ if($operation == $store)
     $prev = readLatestPage($label,'value');
     $prev = number_format("$prev",3,'.','');
     $delta = $value - $prev;
+    $delta = number_format("$delta",3,'.','');
   }
 
   if (isset($_GET['unit'])) {
