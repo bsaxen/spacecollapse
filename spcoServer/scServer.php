@@ -2,7 +2,7 @@
 //=============================================
 // Butterfly - Space Collapse Server
 //
-// Date: 2018-02-12
+// Date: 2018-02-16
 // Author: Benny Saxen
 //
 //=============================================
@@ -63,24 +63,20 @@ if($operation == $store)
   $ok = 1;
   $delta = 0;
   $prev = 0;
+  $cond = 0;
 
   if (isset($_GET['type'])) {
     $type = $_GET['type'];
-  } else {
-    $ok++;
-  }
+  } 
 
   if (isset($_GET['label'])) {
     $label = $_GET['label'];
+    $cond++;
   }
 
   if (isset($_GET['value'])) {
     $value = $_GET['value'];
-    $value = number_format("$value",3,'.','');
-    $prev = readLatestPage($label,'value');
-    $prev = number_format("$prev",3,'.','');
-    $delta = $value - $prev;
-    $delta = number_format("$delta",3,'.','');
+    $cond++;
   }
 
   if (isset($_GET['unit'])) {
@@ -106,6 +102,7 @@ if($operation == $store)
   // General
   if (isset($_GET['datetime'])) {
     $datetime = $_GET['datetime'];
+    $cond++;
   } else {
     $datetime = "-";
   }
@@ -132,6 +129,21 @@ if($operation == $store)
     $description = $_GET['description'];
   } else {
     $description = "-";
+  }
+    
+  if ($cond == 3) // label value and datetime
+  {
+    $dt = readLatestPage($label,'datetime');
+    if($datetime != $dt)
+    {
+        $value = number_format("$value",3,'.','');
+        $prev = readLatestPage($label,'value');
+        $prev = number_format("$prev",3,'.','');
+        $delta = $value - $prev;
+        $delta= number_format("$delta",3,'.','');
+    }
+    else
+        $delta = readLatestPage($label,'delta');
   }
   //===========================================
   if($ok == 1)
