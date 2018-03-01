@@ -43,8 +43,8 @@ window.onload = function(){
             success:	setData,
             type:		'GET',
             data:		{
-                place: '<?php echo("$place")?>',
-                mode: '<?php echo("$mode")?>'
+                place: '1<?php echo("$place")?>',
+                mode: '2<?php echo("$mode")?>'
             }
         });
     }
