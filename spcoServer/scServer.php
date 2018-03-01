@@ -48,12 +48,12 @@ function readLatestPage($lbl,$prm)
     return "${$prm}";
 }
 //=============================================
-function writeSingle($lbl,$prm)
+function writeSingle($lbl,$val)
 //=============================================
 {
   $spco_page = $lbl.'.single';
   $spcoFile = fopen($spco_page, "w");
-  fwrite($spcoFile, "$value");
+  fwrite($spcoFile, "$val");
   fclose($spcoFile);
 }
 //=============================================
