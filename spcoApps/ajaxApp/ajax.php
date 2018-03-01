@@ -56,7 +56,7 @@ function getSingleData($url)
 
 
 //$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.json";
-$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.single"
+$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.single";
 //$mres = getJsonData($spco_url);
 //echo json_encode($mres);
 
