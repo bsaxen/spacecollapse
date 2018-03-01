@@ -39,7 +39,8 @@ window.onload = function(){
         console.log("Getting  data");
         $.ajax({
             url:		'ajax.php',
-            dataType:	'json',
+            /*dataType:	'json',*/
+            dataType:	'text',
             success:	setData,
             type:		'GET',
             data:		{
@@ -53,13 +54,15 @@ window.onload = function(){
     {
         console.log("data!");
 
-        //console.log(result);
+        console.log(result);
 
-        console.log(result['1']['1']);
-        console.log(result['1']['2']);
+        //console.log(result['1']['1']);
+        //console.log(result['1']['2']);
 
         var input = document.getElementById("benny");
-        var value = result[1][2];
+        //var value = result[1][2];
+        var value = result;
+
         var mt = value.toString();
         input.value = mt;
         //alert(result['1']['2']);
