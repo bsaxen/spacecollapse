@@ -1,17 +1,19 @@
 <?php
 //=============================================
-// Butterfly - Space Collapse Server
-//
-// Date: 2018-02-16
-// Author: Benny Saxen
-//
+// File.......: scServer.php
+// Date.......: 2018-03-01
+// Author.....: Benny Saxen
+// Description: Butterfly - Space Collapse Server
 //=============================================
+
+// Possible Operations Codes
 $store = 1;
 $get_single_parameter = 2;
+$heater_control = 3;
 
 $sc_host      = "simuino.com";
 $sc_server_id = "Butterfly Server 1.0";
-$date = date_create();
+$date         = date_create();
 $sc_timestamp = date_format($date, 'Y-m-d H:i:s');
 //=============================================
 function readLatestPage($lbl,$prm)
@@ -47,6 +49,15 @@ function readLatestPage($lbl,$prm)
     return "${$prm}";
 }
 //=============================================
+function writeSingle($lbl,$prm)
+//=============================================
+{
+  $spco_page = $label.'.single';
+  $spcoFile = fopen($spco_page, "w");
+  fwrite($spcoFile, "$value");
+  fclose($spcoFile);
+}
+//=============================================
 // End of library
 //=============================================
 
@@ -67,7 +78,7 @@ if($operation == $store)
 
   if (isset($_GET['type'])) {
     $type = $_GET['type'];
-  } 
+  }
 
   if (isset($_GET['label'])) {
     $label = $_GET['label'];
@@ -77,6 +88,11 @@ if($operation == $store)
   if (isset($_GET['value'])) {
     $value = $_GET['value'];
     $cond++;
+  }
+
+  if($cond == 2)
+  {
+    writeTxt($label, $value);
   }
 
   if (isset($_GET['unit'])) {
@@ -130,7 +146,7 @@ if($operation == $store)
   } else {
     $description = "-";
   }
-    
+
   if ($cond == 3) // label value and datetime
   {
     $dt = readLatestPage($label,'datetime');
@@ -285,5 +301,24 @@ if($operation == $store)
     echo "[$res]";
   }
 
+  if($operation == $heater_control)
+  {
+
+    if (isset($_GET['label'])) {
+      $label = $_GET['label'];
+    }
+    if (isset($_GET['state'])) {
+      $state = $_GET['state'];
+    }
+    if (isset($_GET['target'])) {
+      $target = $_GET['target'];
+    }
+    if (isset($_GET['t_in'])) {
+      $t_in = $_GET['t_in'];
+    }
+    if (isset($_GET['t_in'])) {
+      $t_in = $_GET['t_in'];
+    }
+  }
 
   ?>

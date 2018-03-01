@@ -30,48 +30,9 @@
 <body>
   <input id="benny" type="text" name="saxen" />
   hello
+
 <script type="text/javascript">
 window.onload = function(){
-
-    $.ajax({
-        url:		'ajax.php',
-        dataType:	'json',
-        success:	initDash,
-        type:		'GET',
-        data:		{
-            place: '<?php echo("$place")?>',
-            mode: '<?php echo("$mode")?>'
-        }
-    });
-
-
-    function initDash(result) {
-        //console.log(result['0']['1']);
-        //console.log(result['0']['2']);
-        var rr = result['0']['1']; // Number of items
-        //var cc = result['0']['2']; // Number of parameters in each item
-        var count;
-        for(count=1; count <= rr; count++)
-        {
-            var div = document.createElement('div');
-            document.body.appendChild(div);
-            var value = result[count][2];
-            var mt = value.toString();
-            var temp1 = "g";
-            var did = temp1.concat(count);
-            div.id = did;
-            div.style.float = 'left';
-            //div.style.backgroundColor = 'red';
-            div.style.width  = '200px';
-            div.style.height = '160px';
-            //div.style.position = 'relative';
-            //div.style.display = 'inline-block';
-            console.log(value);
-            var title = "";
-        }
-        console.log("initiated");
-    }
-
 
     var tid = setInterval(getData, 3000);
     function getData() {

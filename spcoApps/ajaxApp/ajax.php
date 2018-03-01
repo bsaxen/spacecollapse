@@ -1,9 +1,15 @@
 <?php
+//=============================================
+// File.......: ajax.php
+// Date.......: 2018-03-01
+// Author.....: Benny Saxen
+// Description:
+//=============================================
 
 //include("lib.php");
 
 //=========================================================================
-function getSpcoData($url)
+function getJsonData($url)
 //=========================================================================
 {
   $ix_label   = 1;
@@ -30,14 +36,31 @@ function getSpcoData($url)
   //$mres[0][2] = 5;
   return $mres;
 }
+//=========================================================================
+function getSingleData($url)
+//=========================================================================
+{
 
-$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.json";
+  $options = array(
+    'http' => array(
+        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        'method'  => 'GET'
+    )
+  );
+  $context  = stream_context_create($options);
+  $result = file_get_contents($url, false, $context);
 
-//$place = $_GET['place'];
-//$mode = $_GET['mode'];
+  return $result;
+}
+//=========================================================================
 
-$mres = getSpcoData($spco_url);
-//print_r($mres);
-//echo($mres);
-echo json_encode($mres);
+
+//$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.json";
+$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.single"
+//$mres = getJsonData($spco_url);
+//echo json_encode($mres);
+
+$mres = getSingleData($spco_url);
+echo $mres;
+
 ?>
