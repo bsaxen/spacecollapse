@@ -9,7 +9,6 @@
 // Possible Operations Codes
 $store = 1;
 $get_single_parameter = 2;
-$heater_control = 3;
 
 $sc_host      = "simuino.com";
 $sc_server_id = "Butterfly Server 1.0";
@@ -92,7 +91,7 @@ if($operation == $store)
 
   if($cond == 2)
   {
-    writeTxt($label, $value);
+    writeSingle($label, $value);
   }
 
   if (isset($_GET['unit'])) {
@@ -299,26 +298,6 @@ if($operation == $store)
 
     $res = readLatestPage($label,$param);
     echo "[$res]";
-  }
-
-  if($operation == $heater_control)
-  {
-
-    if (isset($_GET['label'])) {
-      $label = $_GET['label'];
-    }
-    if (isset($_GET['state'])) {
-      $state = $_GET['state'];
-    }
-    if (isset($_GET['target'])) {
-      $target = $_GET['target'];
-    }
-    if (isset($_GET['t_in'])) {
-      $t_in = $_GET['t_in'];
-    }
-    if (isset($_GET['t_in'])) {
-      $t_in = $_GET['t_in'];
-    }
   }
 
   ?>
