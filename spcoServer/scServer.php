@@ -51,7 +51,7 @@ function readLatestPage($lbl,$prm)
 function writeSingle($lbl,$prm)
 //=============================================
 {
-  $spco_page = $label.'.single';
+  $spco_page = $lbl.'.single';
   $spcoFile = fopen($spco_page, "w");
   fwrite($spcoFile, "$value");
   fclose($spcoFile);
