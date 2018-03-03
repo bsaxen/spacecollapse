@@ -1,5 +1,28 @@
 <!doctype html>
+<?php
+$config_file = 'configuration.txt';
+$file = fopen($config_file,"r");
+if ($file)
+{
+  $n = 0;
+  while(! feof($file))
+  {
+    $line = fgets($file);
 
+    if(strlen($line) > 2)
+    {
+       sscanf($line,"%s %s",$label,$ioant_stream);
+       $n++;
+       $istream[$n] = $ioant_stream;
+       $ilabel[$n] = $label;
+    }
+  }
+  fclose($file);
+}
+else {
+  echo("Error");
+}
+?>
 <html>
 <head>
     <title>SpaceCollapseAjaxApp</title>
@@ -21,15 +44,23 @@
 
     p {
         display: block;
-        width: 450px;
+        width: 950px;
         margin: 2em auto;
         text-align: left;
     }
     </style>
 </head>
 <body>
-  <input id="benny" type="text" name="saxen" />
-  hello
+  <?php
+  echo("<p><table>");
+  for ($ii = 1; $ii <= $n;$ii++)
+  {
+    echo("<tr><td>$ilabel[$ii]</td>");
+    echo("<td><input id=\"f$ii\" type=\"text\" name=\"fn$ii\" size=8 /></td>");
+    echo("</tr>");
+  }
+  echo("</p></table>");
+  ?>
 
 <script type="text/javascript">
 window.onload = function(){
@@ -56,15 +87,33 @@ window.onload = function(){
 
         console.log(result);
 
+        var resArray = result.split(" ");
+
         //console.log(result['1']['1']);
         //console.log(result['1']['2']);
+        <?php
+        for ($ii = 1; $ii <= $n;$ii++)
+        {
+          echo("
+          var resPair = resArray[$ii-1].split(\":\");
 
-        var input = document.getElementById("benny");
-        //var value = result[1][2];
-        var value = result;
+          var input$ii = document.getElementById(\"f$ii\");
+          var value$ii = resPair[0];
+          var mt$ii = value$ii.toString();
+          input$ii.value = mt$ii;
 
-        var mt = value.toString();
-        input.value = mt;
+          var s_value$ii = resPair[1];
+          var s_mt$ii = s_value$ii.toString();
+          if (s_mt$ii == 1)
+            input$ii.style.background = \"blue\";
+          if (s_mt$ii == 2)
+            input$ii.style.background = \"green\";
+          if (s_mt$ii == 3)
+            input$ii.style.background = \"red\";
+          ");
+        }
+        ?>
+
         //alert(result['1']['2']);
         /*
         var rr = result['0']['1']; // Number of items

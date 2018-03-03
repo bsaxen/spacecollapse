@@ -48,19 +48,50 @@ function getSingleData($url)
     )
   );
   $context  = stream_context_create($options);
-  $result = file_get_contents($url, false, $context);
+  $content = file_get_contents($url, false, $context);
+  if ($content === false) {
+      $content = 'no_data';
+  }
 
-  return $result;
+  return $content;
 }
 //=========================================================================
-
-
 //$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.json";
-$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.single";
 //$mres = getJsonData($spco_url);
 //echo json_encode($mres);
+$mres = array();
+$config_file = 'configuration.txt';
+$file = fopen($config_file,"r");
+if ($file)
+{
+  $n = 0;
+  while(! feof($file))
+  {
+    $line = fgets($file);
+    if(strlen($line) > 2)
+    {
+       sscanf($line,"%s %s %f %f",$label,$istream,$vmin,$vmax);
+       $n++;
+       $spco_url = "http://spacecollapse.simuino.com/".$istream.".single";
+       $mres[$n] = getSingleData($spco_url);
+       $status = 2;
+       if($mres[$n] < $vmin)$status = 1;
+       if($mres[$n] > $vmax)$status = 3;
+       echo $mres[$n].':'.$status.' ';
+    }
+  }
+  fclose($file);
+}
+else {
+  echo("Error");
+}
 
-$mres = getSingleData($spco_url);
-echo $mres;
+//$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_nixie2_0.single";
+//$mres[1] = getSingleData($spco_url);
+//$spco_url = "http://spacecollapse.simuino.com/kil_kvv32_esp2_0.single";
+//$mres[2] = getSingleData($spco_url);
+//$spco_url = "http://spacecollapse.simuino.com/astenas_nytomta_D8_1.single";
+//$mres[3] = getSingleData($spco_url);
+//echo $mres[1].' '.$mres[2].' '.$mres[3];
 
 ?>
