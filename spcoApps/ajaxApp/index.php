@@ -51,6 +51,13 @@ else {
     </style>
 </head>
 <body>
+  
+  <iframe
+    width="350"
+    height="430"
+    src="https://console.dialogflow.com/api-client/demo/embedded/saxen">
+  </iframe>
+  
   <?php
   echo("<p><table>");
   for ($ii = 1; $ii <= $n;$ii++)
