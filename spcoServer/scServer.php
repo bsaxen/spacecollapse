@@ -82,6 +82,8 @@ if($operation == $store)
   if (isset($_GET['label'])) {
     $label = $_GET['label'];
     $cond++;
+    $action = readActionFile($label);
+    echo("action=$action");
   }
 
   if (isset($_GET['value'])) {
