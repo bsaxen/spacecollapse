@@ -72,6 +72,8 @@ function readActionFile($lbl)
         $result = $work;
       }
       fclose($file);
+      // Delete file
+      if (file_exists($action_file)) unlink($action_file);
   }
   else {
       $result = "no_action_file";
