@@ -64,6 +64,7 @@ function readActionFile($lbl)
   $action_file = fopen($action_file, "r");
   if ($file)
   {
+      $result = "no_action_in_file";
       while(! feof($file))
       {
         $line = fgets($file);
@@ -73,7 +74,7 @@ function readActionFile($lbl)
       fclose($file);
   }
   else {
-      $result = "noaction";
+      $result = "no_action_file";
   }
   return $result;
 }
