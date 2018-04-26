@@ -64,12 +64,12 @@ function readActionFile($lbl)
   $file = fopen($action_file, "r");
   if ($file)
   {
-      $result = "no_action_in_file";
+      $result = ":";
       while(! feof($file))
       {
         $line = fgets($file);
         //sscanf($line,"%s",$work);
-        $result = $line;
+        $result = $result.$line;
       }
       fclose($file);
       // Delete file
