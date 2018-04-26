@@ -68,8 +68,8 @@ function readActionFile($lbl)
       while(! feof($file))
       {
         $line = fgets($file);
-        sscanf($line,"%s",$work);
-        $result = $work;
+        //sscanf($line,"%s",$work);
+        $result = $line;
       }
       fclose($file);
       // Delete file
