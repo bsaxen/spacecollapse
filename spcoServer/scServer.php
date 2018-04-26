@@ -1,7 +1,7 @@
 <?php
 //=============================================
 // File.......: scServer.php
-// Date.......: 2018-03-01
+// Date.......: 2018-04-26
 // Author.....: Benny Saxen
 // Description: Butterfly - Space Collapse Server
 //=============================================
@@ -55,6 +55,27 @@ function writeSingle($lbl,$val)
   $spcoFile = fopen($spco_page, "w");
   fwrite($spcoFile, "$val");
   fclose($spcoFile);
+}
+//=============================================
+function readActionFile($lbl)
+//=============================================
+{
+  $action_file = $lbl.'.action';
+  $action_file = fopen($action_file, "r");
+  if ($file)
+  {
+      while(! feof($file))
+      {
+        $line = fgets($file);
+        sscanf($line,"%s",$work);
+        $result = $work;
+      }
+      fclose($file);
+  }
+  else {
+      $result = "noaction";
+  }
+  return $result;
 }
 //=============================================
 // End of library
