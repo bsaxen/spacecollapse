@@ -76,7 +76,7 @@ function readActionFile($lbl)
       if (file_exists($action_file)) unlink($action_file);
   }
   else {
-      $result = "no_action_file";
+      $result = "no_action";
   }
   return $result;
 }
@@ -107,7 +107,7 @@ if($operation == $store)
     $label = $_GET['label'];
     $cond++;
     $action = readActionFile($label);
-    echo("action=$action");
+    if($action != "no_action")echo("action=$action");
   }
 
   if (isset($_GET['value'])) {
