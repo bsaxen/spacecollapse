@@ -61,7 +61,7 @@ function readActionFile($lbl)
 //=============================================
 {
   $action_file = $lbl.'.action';
-  $action_file = fopen($action_file, "r");
+  $file = fopen($action_file, "r");
   if ($file)
   {
       $result = "no_action_in_file";
